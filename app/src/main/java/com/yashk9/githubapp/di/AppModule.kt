@@ -1,9 +1,9 @@
 package com.yashk9.githubapp.di
 
 import android.content.Context
-import android.os.Build
 import androidx.room.Room
 import com.yashk9.githubapp.BuildConfig
+import com.yashk9.githubapp.data.db.AppDatabase
 import com.yashk9.githubapp.data.remote.GithubApiService
 import com.yashk9.githubapp.util.Constants.BASE_URL
 import dagger.Module
@@ -36,6 +36,14 @@ object AppModule {
             .baseUrl(BASE_URL)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "GithubRepo.db")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

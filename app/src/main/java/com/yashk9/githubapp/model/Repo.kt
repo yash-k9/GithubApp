@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "repo")
+@Entity(tableName = "repos")
 data class Repo(
     @PrimaryKey(autoGenerate = false)
     val id: Long,
