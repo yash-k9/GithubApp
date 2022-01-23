@@ -1,14 +1,11 @@
 # GithubApp 📱
 An Android application to fetch and search the repositories from the Github REST API. App is built with modern Android components using **MVVM** architecture.
-## Features
+# Features
 - View Repositories
 - Query Repositories
 - Loading/Error State
 - Offline Caching
 - Paging
-
-<br />
-
 # Built with ⚙️
 - [Kotlin](https://kotlinlang.org/)
 - [Room](https://developer.android.com/topic/libraries/architecture/room)
@@ -21,8 +18,6 @@ An Android application to fetch and search the repositories from the Github REST
 - [Retrofit](https://square.github.io/retrofit/)
 - [Glide](https://github.com/bumptech/glide)
 
-<br />
-
 # Working
 
 Application has two screens, Home and Search Fragment. This home and search screen is split to demonstrate Navigation. Viewmodel is shared between two fragments.
@@ -34,7 +29,7 @@ Hilt is used to provide dependencies
 > This fragment has search view, on submission, data is fetched and served. This fragment demonstrates handling different state from the response.
 
 
-## Data Layer
+# Data Layer
 ```
 Data                             
 |_ Room Database                      
@@ -45,9 +40,8 @@ Data
 - Remote API. There are two API endpoints, one for repository and another for querying.
   - View Repository -> This returns the repository for a user, currently used **Square** for demonstration purpose. This can be modified for other usecases. Data handling would be the same
   - Query Repository -> This queries the repository and finds the particular repo in name and description 
+ - **Paging3** handles the Home Fragment's data.
 
-**Paging3** handles the Home Fragment's data.
-
-## UI
+# UI
 Jetpack Navigation is used for the fragment navigation and Data for the home fragment is produced by the PagingSource
 
