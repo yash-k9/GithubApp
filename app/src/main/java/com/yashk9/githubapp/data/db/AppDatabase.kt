@@ -10,6 +10,6 @@ import com.yashk9.githubapp.model.Repo
 
 @Database(entities = [Repo::class, RemoteKeys::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun getGithubDao(): GithubRepoDao
+    abstract fun getGithubRepoDao(): GithubRepoDao
     abstract fun getRemoteKeysDao(): RemoteKeysDao
 }

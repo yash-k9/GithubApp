@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GithubApp</string>
+    <string name="home_retry">Network Error! Try Again</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_repository_available">No Repository Available</string>
+    <string name="error">Network Error</string>
 </resources>
