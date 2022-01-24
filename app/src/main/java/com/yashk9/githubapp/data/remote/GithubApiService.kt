@@ -7,6 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubApiService {
+    //Fetch the Repositories for a user
     @GET("/users/{name}/repos?q=sort:stars")
     suspend fun getRepoByUser(
         @Path("name") name: String,
@@ -14,8 +15,10 @@ interface GithubApiService {
         @Query("page") page: Int
     ): List<Repo>
 
+    //Query the API for the repository
     @GET("search/repositories")
     suspend fun getQueryRepo(
-        @Query("q") query: String
+        @Query("q") query: String,
+        @Query("per_page") per_page: Int = 100
     ): RepoSearchResponse
 }

@@ -21,7 +21,7 @@ import com.yashk9.githubapp.ui.viewmodel.RepoViewModel
 import com.yashk9.githubapp.util.show
 import kotlinx.coroutines.flow.collect
 
-
+@ExperimentalPagingApi
 class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeBinding
     val viewModel: RepoViewModel by activityViewModels()
@@ -36,15 +36,24 @@ class HomeFragment : Fragment(){
         return binding.root
     }
 
-    @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
 
+
+    private fun initViews() {
+        //Set Paging Adapter
         val adapter = RepoAdapter()
         binding.recycler.adapter = adapter.withLoadStateFooter(
-            footer = RepoLoadStateAdapter{ adapter.retry() }
+            footer = RepoLoadStateAdapter { adapter.retry() }
         )
-        binding.recycler.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recycler.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         lifecycleScope.launchWhenCreated {
             viewModel.offlineCache.collect {
@@ -54,10 +63,12 @@ class HomeFragment : Fragment(){
         }
 
 
-        adapter.addLoadStateListener{ loadState ->
-            binding.recycler.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+        adapter.addLoadStateListener { loadState ->
+            binding.recycler.isVisible =
+                loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
             binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
-            binding.retry.isVisible = loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
+            binding.retry.isVisible =
+                loadState.mediator?.refresh is LoadState.Error && adapter.itemCount == 0
         }
 
         binding.swipeLayout.setOnRefreshListener {
@@ -66,6 +77,20 @@ class HomeFragment : Fragment(){
 
         binding.retry.setOnClickListener {
             adapter.retry()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_app_bar_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.search -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -84,20 +109,6 @@ class HomeFragment : Fragment(){
             }
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_app_bar_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.search -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
 }

@@ -1,29 +1,16 @@
 package com.yashk9.githubapp.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState
 import com.yashk9.githubapp.R
 import com.yashk9.githubapp.databinding.ActivityMainBinding
-import com.yashk9.githubapp.ui.adapter.RepoAdapter
-import com.yashk9.githubapp.ui.adapter.RepoLoadStateAdapter
-import com.yashk9.githubapp.ui.home.HomeFragmentDirections
 import com.yashk9.githubapp.ui.viewmodel.RepoViewModel
 import com.yashk9.githubapp.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHostFragment: NavHostFragment
-
     private val viewModel: RepoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
+                //Handle Keyboard when returned from Search Fragment
                 R.id.homeFragment -> binding.root.hideKeyboard()
             }
         }

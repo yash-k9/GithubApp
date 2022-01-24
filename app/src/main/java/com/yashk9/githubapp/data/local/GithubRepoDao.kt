@@ -21,4 +21,10 @@ interface GithubRepoDao {
 
     @Query("DELETE FROM repos")
     suspend fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM repos")
+    suspend fun getCount(): Int
+
+    @Query("SELECT * FROM repos where name LIKE '%' || :query || '%'")
+    suspend fun queryRepo(query: String): List<Repo>
 }

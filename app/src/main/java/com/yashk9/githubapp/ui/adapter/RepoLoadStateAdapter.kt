@@ -8,6 +8,7 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yashk9.githubapp.databinding.LayoutLoadingStateBinding
 
+//LoadStateAdapter to add the state at the footer for Paging Data
 class RepoLoadStateAdapter(
     private val retry: () -> Unit
 ) : LoadStateAdapter<RepoLoadStateAdapter.RepoLoadStateViewHolder>() {

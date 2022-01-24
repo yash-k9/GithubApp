@@ -2,6 +2,7 @@ package com.yashk9.githubapp.util
 
 import kotlin.Exception
 
+//ResultWrapper for Network Functions
 sealed class Result<out V, out E>{
     data class Success<out V>(val data: V): Result<V, Nothing>()
     data class Error<out E>(val exception: E): Result<Nothing, E>()

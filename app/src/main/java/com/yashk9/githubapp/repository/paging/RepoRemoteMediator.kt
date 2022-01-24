@@ -26,10 +26,17 @@ class RepoRemoteMediator(
     private val repoDao: GithubRepoDao = database.getGithubRepoDao()
     private val remoteKeysDao: RemoteKeysDao = database.getRemoteKeysDao()
 
+    //If data is present in the database, allow user to refresh else launch refresh on open
     override suspend fun initialize(): InitializeAction {
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
+        return if(repoDao.getCount() > 0){
+            InitializeAction.SKIP_INITIAL_REFRESH
+        }else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
     }
 
+    //Fetches the current page and stores it in the database
+    //RemoteKey holds the data of prev and next page for the item
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Repo>): MediatorResult {
         return try {
             val currentPage = when (loadType) {
@@ -55,14 +62,14 @@ class RepoRemoteMediator(
                 }
             }
 
+            //Request GithubAPIService for the Repositories
             val response = githubApiService.getRepoByUser("square", state.config.pageSize, currentPage)
             val endOfPaginationReached = response.isEmpty()
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
-            delay(4000)
-
+            //Invalidate previous data on Refresh and add latest RepoItem and Respective key in Database
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     repoDao.deleteAll()
@@ -87,6 +94,7 @@ class RepoRemoteMediator(
         }
     }
 
+    //These methods get the respective page for the current key based on load state
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, Repo>
     ): RemoteKeys? {

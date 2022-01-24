@@ -10,9 +10,14 @@ import com.yashk9.githubapp.R
 import com.yashk9.githubapp.databinding.RepoListItemBinding
 import com.yashk9.githubapp.model.Repo
 
-
+//Adapter for the HomeFragment - Handles data from Paging
 class RepoAdapter: PagingDataAdapter<Repo, RecyclerView.ViewHolder>(diffUtil){
     class RepoViewHolder(val binding: RepoListItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding = RepoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RepoViewHolder(binding)
+    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as RepoViewHolder).binding
@@ -31,11 +36,6 @@ class RepoAdapter: PagingDataAdapter<Repo, RecyclerView.ViewHolder>(diffUtil){
             }
 
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = RepoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RepoViewHolder(binding)
     }
 
     companion object{
