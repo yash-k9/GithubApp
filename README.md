@@ -24,7 +24,7 @@ An Android application to fetch and search the repositories from the Github REST
 
 # Working
 
-Application has two screens, Home and Search Fragment. Home and Search Functionality can be implemented in one screen, they are separated to demonstrate the Navigation and UI State Handling.
+Application has two screens, Home and Search Fragment. Home and Search Functionality can also be implemented in one screen, they are separated to demonstrate the Navigation and UI State Handling.
 Hilt is used to provide dependencies.
 
 - Home Fragment 
