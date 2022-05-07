@@ -8,7 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yashk9.githubapp.R
 import com.yashk9.githubapp.databinding.ActivityMainBinding
-import com.yashk9.githubapp.ui.viewmodel.RepoViewModel
+import com.yashk9.githubapp.ui.home.HomeViewModel
 import com.yashk9.githubapp.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHostFragment: NavHostFragment
-    private val viewModel: RepoViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,14 +1,11 @@
 package com.yashk9.githubapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
@@ -17,14 +14,12 @@ import com.yashk9.githubapp.R
 import com.yashk9.githubapp.databinding.FragmentHomeBinding
 import com.yashk9.githubapp.ui.adapter.RepoAdapter
 import com.yashk9.githubapp.ui.adapter.RepoLoadStateAdapter
-import com.yashk9.githubapp.ui.viewmodel.RepoViewModel
-import com.yashk9.githubapp.util.show
 import kotlinx.coroutines.flow.collect
 
 @ExperimentalPagingApi
 class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeBinding
-    val viewModel: RepoViewModel by activityViewModels()
+    val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +56,6 @@ class HomeFragment : Fragment(){
                 binding.swipeLayout.isRefreshing = false
             }
         }
-
 
         adapter.addLoadStateListener { loadState ->
             binding.recycler.isVisible =
